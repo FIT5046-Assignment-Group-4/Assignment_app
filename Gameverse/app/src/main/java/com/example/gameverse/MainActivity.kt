@@ -17,10 +17,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             GameverseTheme {
+                val games = listOf(
+                    Game("CS:GO", 0.00f, 4.3f, "https://seeklogo.com/images/C/csgo-logo-CAA0A4D48A-seeklogo.com.png"),
+                    Game("Dota2", 0.00f, 4.7f, "https://i.pinimg.com/originals/8a/8b/50/8a8b50da2bc4afa933718061fe291520.jpg")
+                )
+                // 将您的页面显示在ComposeView中
+                BrowseMainPage(gameList = games)
+//                SearchBar()
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Android")
-                }
+//                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+//                    Greeting("Android")
+//                }
             }
         }
     }
@@ -38,6 +45,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     GameverseTheme {
-        Greeting("Android")
+        //Greeting("Android")
+        SearchBar()
     }
 }
