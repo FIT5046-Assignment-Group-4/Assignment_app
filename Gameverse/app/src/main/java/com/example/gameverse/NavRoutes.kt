@@ -4,5 +4,9 @@ enum class Routes(val value: String) {
     Home("Home"),
     Browse("Browse"),
     Likes("Likes"),
-    Me("Me")
+    Me("Me"),
+    LoginSelection("login_selection"),
+    Login("login"),
+    Registration("registration"),
+    MainPage("Main")
 }
