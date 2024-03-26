@@ -25,14 +25,22 @@ class MainActivity : ComponentActivity() {
                 BrowseMainPage(gameList = games)
 //                SearchBar()
                 // A surface container using the 'background' color from the theme
+<<<<<<< HEAD
 //                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
 //                    Greeting("Android")
 //                }
+=======
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                    // Greeting("Android")
+                    BottomNavigationBar()
+                }
+>>>>>>> main
             }
         }
     }
 }
 
+<<<<<<< HEAD
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
@@ -49,3 +57,5 @@ fun GreetingPreview() {
         SearchBar()
     }
 }
+=======
+>>>>>>> main
