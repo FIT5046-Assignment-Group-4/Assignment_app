@@ -4,6 +4,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.ui.graphics.vector.ImageVector
 
 
@@ -18,11 +20,11 @@ data class NavBarItem (
             ),
             NavBarItem(
                 label = "Browse",
-                icon = Icons.Filled.AccountCircle, route = Routes.Browse.value
+                icon = Icons.Filled.Search, route = Routes.Browse.value
             ),
             NavBarItem(
                 label = "Likes",
-                icon = Icons.Filled.Home, route = Routes.Likes.value
+                icon = Icons.Filled.ThumbUp, route = Routes.Likes.value
             ),
             NavBarItem(
                 label = "Me",
