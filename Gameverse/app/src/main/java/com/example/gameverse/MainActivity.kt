@@ -10,12 +10,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.gameverse.ui.theme.GameverseTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val navController = rememberNavController()
+
             GameverseTheme {
                 val games = listOf(
                     Game("CS:GO", 0.00f, 4.3f, "https://seeklogo.com/images/C/csgo-logo-CAA0A4D48A-seeklogo.com.png"),
@@ -25,22 +30,30 @@ class MainActivity : ComponentActivity() {
                 BrowseMainPage(gameList = games)
 //                SearchBar()
                 // A surface container using the 'background' color from the theme
-<<<<<<< HEAD
 //                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
 //                    Greeting("Android")
 //                }
-=======
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    // Greeting("Android")
-                    BottomNavigationBar()
+                    NavHost(navController = navController, startDestination = Routes.LoginSelection.value, builder = {
+                        composable(Routes.LoginSelection.value){
+                            LoginSelectionScreen(navController)
+                        }
+                        composable(Routes.Registration.value){
+                            RegistrationScreen()
+                        }
+                        composable(Routes.Login.value){
+                            LoginScreen()
+                        }
+                        composable(Routes.MainPage.value){
+                            BottomNavigationBar()
+                        }
+                    })
                 }
->>>>>>> main
             }
         }
     }
 }
 
-<<<<<<< HEAD
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
@@ -58,4 +71,3 @@ fun GreetingPreview() {
     }
 }
 =======
->>>>>>> main
