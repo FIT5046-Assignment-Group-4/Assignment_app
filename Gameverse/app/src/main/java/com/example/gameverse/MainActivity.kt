@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
                             LoginSelectionScreen(navController)
                         }
                         composable(Routes.Registration.value){
-                            RegistrationScreen()
+                            RegistrationScreen(navController)
                         }
                         composable(Routes.Login.value){
                             LoginScreen(navController)

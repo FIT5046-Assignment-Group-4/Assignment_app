@@ -20,12 +20,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
 fun LoginScreen(navController: NavController){
-    var email by remember { mutableStateOf("") }
     Column(
         Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -39,13 +39,15 @@ fun LoginScreen(navController: NavController){
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(value = "", onValueChange = {}, label = {
-            Text(text = "Email Address");
+            Text(text = "Email Address",);
         })
 
         Spacer(modifier = Modifier.height(16.dp))
+
         OutlinedTextField(value = "", onValueChange = {}, label = {
             Text(text = "Password");
-        })
+        },
+            visualTransformation = PasswordVisualTransformation())
 
         Spacer(modifier = Modifier.height(16.dp))
 
