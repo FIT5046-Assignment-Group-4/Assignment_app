@@ -63,16 +63,6 @@ fun Home(navController: NavHostController) {
         //contentAlignment = Alignment.TopCenter
     )
     {
-        var languages = listOf(
-            "Game1",
-            "Game2",
-            "Game3",
-            "Game4",
-            "Game5",
-            "Game6",
-            "Game7"
-        )
-
         var imageId = arrayOf(
             R.drawable.img_game_1,
             R.drawable.img_game_2,
