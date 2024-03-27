@@ -31,7 +31,7 @@ fun BottomNavigationBar() {
                 val currentDestination = navBackStackEntry?.destination
 
                 NavBarItem().NavBarItems().forEach { navItem -> BottomNavigationItem(
-                    icon = { Icon(Icons.Filled.Home, contentDescription = null) },
+                    icon = { Icon(navItem.icon, contentDescription = null) },
                     label = { Text(navItem.label) },
                     selected = currentDestination?.hierarchy?.any {
                         it.route == navItem.route
