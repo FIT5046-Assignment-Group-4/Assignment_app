@@ -1,5 +1,6 @@
 package com.example.gameverse
 
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -19,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
+@RequiresApi(0)
 @Composable
 fun BottomNavigationBar() {
     val navController = rememberNavController()
@@ -65,6 +67,10 @@ fun BottomNavigationBar() {
             }
             composable(Routes.Me.value) {
                 Me(navController)
-            } }
+            }
+            composable(Routes.EditAccount.value) {
+                EditAccounts(navController)
+            }
+        }
     }
 }
