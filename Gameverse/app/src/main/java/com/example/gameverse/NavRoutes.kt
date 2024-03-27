@@ -8,5 +8,6 @@ enum class Routes(val value: String) {
     LoginSelection("login_selection"),
     Login("login"),
     Registration("registration"),
-    MainPage("Main")
+    MainPage("Main"),
+    EditAccount("edit_account")
 }
