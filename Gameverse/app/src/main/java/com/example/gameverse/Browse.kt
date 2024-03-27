@@ -1,15 +1,18 @@
 package com.example.gameverse
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
@@ -29,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -87,11 +91,9 @@ fun GameList(gameList: List<Game>) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(5.dp),
-                    elevation = CardDefaults.cardElevation(
-                        defaultElevation = 6.dp
-                    ),
+                    elevation = CardDefaults.cardElevation(5.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = Color.LightGray
+                        containerColor = Color.White
                     ),
                 ) {
                     Row(
@@ -117,12 +119,11 @@ fun GameList(gameList: List<Game>) {
                         ) {
                             Text(
                                 text = item.name,
-                                fontSize = 18.sp,
+                                fontSize = 20.sp,
                                 modifier = Modifier.padding(bottom = 4.dp)
                             )
                             Text(
                                 text = "Price: ${item.price} AUD",
-                                color = Color.White,
                                 modifier = Modifier.padding(bottom = 4.dp)
                             )
                         }
@@ -134,7 +135,6 @@ fun GameList(gameList: List<Game>) {
                         ) {
                             Text(
                                 text = "Rating: ${item.rating}",
-                                color = Color.White
                             )
                         }
                     }
@@ -146,8 +146,23 @@ fun GameList(gameList: List<Game>) {
 
 @Composable
 fun BrowseMainPage(gameList: List<Game>) {
+    var searchText by remember { mutableStateOf("") }
     Column(modifier = Modifier.fillMaxSize()) {
-        SearchBar()
+        CustomEdit(
+            text = searchText,
+            onValueChange = {
+                searchText = it
+            },
+            hint = "Search",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 10.dp, top = 10.dp, end = 10.dp, bottom = 5.dp)
+                .height(50.dp)
+                .background(Color(0xBCE9E9E9), shape = MaterialTheme.shapes.medium)
+                .padding(horizontal = 16.dp),
+            // textStyle = Typography.bodyMedium,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+        )
         GameList(gameList = gameList)
     }
 }
