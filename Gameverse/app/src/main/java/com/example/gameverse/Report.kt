@@ -58,7 +58,8 @@ import coil.compose.AsyncImage
 import com.google.android.gms.wallet.button.ButtonConstants
 
 @Composable
-fun Report() {
+fun Report(navController: NavHostController) {
+
     Column(modifier = Modifier.fillMaxWidth()) {
         TopAppBar(
             modifier = Modifier.fillMaxWidth(),
@@ -67,10 +68,10 @@ fun Report() {
                 Text(text = "CS:GO")
             },
             navigationIcon = {
-                IconButton(onClick = {}) {
+                IconButton(onClick = { navController.navigateUp() }) {  // This will navigate back when clicked
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = ""
+                        contentDescription = "Back"
                     )
                 }
             },
@@ -146,7 +147,7 @@ fun Report() {
             horizontalArrangement = Arrangement.Center
         ) {
             Button(
-                onClick = { /* 点击事件 */ },
+                onClick = { /* TODO */ },
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = Color.LightGray,
                     contentColor = Color.White
@@ -178,10 +179,10 @@ fun Report() {
 }
 
 
-@Preview
-@Composable
-fun ReportPreview() {
-    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-        Report()
-    }
-}
+//@Preview
+//@Composable
+//fun ReportPreview() {
+//    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+//        Report()
+//    }
+//}
