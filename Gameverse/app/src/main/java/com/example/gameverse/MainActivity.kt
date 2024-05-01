@@ -24,21 +24,6 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             GameverseTheme {
-//<<<<<<< HEAD
-////                val games = listOf(
-////                    Game("CS:GO", 0.00f, 4.3f, "https://seeklogo.com/images/C/csgo-logo-CAA0A4D48A-seeklogo.com.png"),
-////                    Game("Dota2", 0.00f, 4.7f, "https://i.pinimg.com/originals/8a/8b/50/8a8b50da2bc4afa933718061fe291520.jpg")
-////                )
-////                BrowseMainPage(gameList = games)
-////                SearchBar()
-//                // A surface container using the 'background' color from the theme
-////<<<<<<< HEAD
-////                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-////                    Greeting("Android")
-//////                }
-////=======
-//=======
-//>>>>>>> main
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     NavHost(navController = navController, startDestination = Routes.LoginSelection.value, builder = {
                         composable(Routes.LoginSelection.value){
@@ -53,24 +38,14 @@ class MainActivity : ComponentActivity() {
                         composable(Routes.MainPage.value){
                             BottomNavigationBar()
                         }
+//                        composable(Routes.Report.value) {
+////                            Report(navController = navController)
+//                        }
                     })
                 }
-//<<<<<<< HEAD
-////>>>>>>> main
-//=======
-//>>>>>>> main
             }
         }
     }
 }
 
-//<<<<<<< HEAD
-////<<<<<<< HEAD
-////@Composable
-////fun Greeting(name: String, modifier: Modifier = Modifier) {
-////    Text(
-////            text = "Hello $name!",
-////            modifier = modifier
-////    )
-////}
 

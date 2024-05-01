@@ -9,5 +9,6 @@ enum class Routes(val value: String) {
     Login("login"),
     Registration("registration"),
     MainPage("Main"),
-    EditAccount("edit_account")
+    EditAccount("edit_account"),
+    Report("Report")
 }
