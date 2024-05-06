@@ -71,6 +71,9 @@ fun BottomNavigationBar() {
             composable(Routes.EditAccount.value) {
                 EditAccounts(navController)
             }
+            composable(Routes.Details.value) {
+                Details(navController)
+            }
         }
     }
 }

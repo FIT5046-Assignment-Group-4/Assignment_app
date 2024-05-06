@@ -141,7 +141,8 @@ fun Home(navController: NavHostController) {
                         painter = imageId,
                         title = names,
                         price = prices,
-                        modifier = Modifier
+                        modifier = Modifier,
+                        navController = navController
                     )
                 }
             }
@@ -162,14 +163,16 @@ fun RowItem(
     painter: Array<Int>,
     title: Array<String>,
     price: Array<String>,
-    modifier: Modifier
+    modifier: Modifier,
+    navController: NavHostController
 ) {
     Card(
         modifier
             .padding(5.dp)
             .wrapContentSize()
             .fillMaxWidth()
-            .height(200.dp),
+            .height(200.dp)
+            .clickable(onClick = {navController.navigate(Routes.Details.value)}),
         colors = CardDefaults.cardColors(
             containerColor = Color.White
         ),
