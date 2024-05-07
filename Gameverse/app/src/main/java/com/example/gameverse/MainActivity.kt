@@ -7,70 +7,77 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.gameverse.ui.theme.GameverseTheme
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : ComponentActivity() {
+
+    private val signInLauncher = registerForActivityResult(
+        FirebaseAuthUIActivityResultContract()
+    ) { res -> this.onSignInResult(res) }
+
     @RequiresApi(64)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
+            val isLoggedIn = checkUserAuthentication()
 
             GameverseTheme {
-//<<<<<<< HEAD
-////                val games = listOf(
-////                    Game("CS:GO", 0.00f, 4.3f, "https://seeklogo.com/images/C/csgo-logo-CAA0A4D48A-seeklogo.com.png"),
-////                    Game("Dota2", 0.00f, 4.7f, "https://i.pinimg.com/originals/8a/8b/50/8a8b50da2bc4afa933718061fe291520.jpg")
-////                )
-////                BrowseMainPage(gameList = games)
-////                SearchBar()
-//                // A surface container using the 'background' color from the theme
-////<<<<<<< HEAD
-////                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-////                    Greeting("Android")
-//////                }
-////=======
-//=======
-//>>>>>>> main
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    NavHost(navController = navController, startDestination = Routes.LoginSelection.value, builder = {
-                        composable(Routes.LoginSelection.value){
-                            LoginSelectionScreen(navController)
-                        }
-                        composable(Routes.Registration.value){
-                            RegistrationScreen(navController)
-                        }
-                        composable(Routes.Login.value){
-                            LoginScreen(navController)
+                    NavHost(navController = navController, startDestination = isLoggedIn, builder = {
+                        composable(Routes.LoginSelection.value) {
+                            LoginSelectionScreen(navController = navController, ::launchSignInFlow)
                         }
                         composable(Routes.MainPage.value){
                             BottomNavigationBar()
                         }
                     })
                 }
-//<<<<<<< HEAD
-////>>>>>>> main
-//=======
-//>>>>>>> main
             }
         }
     }
-}
 
-//<<<<<<< HEAD
-////<<<<<<< HEAD
-////@Composable
-////fun Greeting(name: String, modifier: Modifier = Modifier) {
-////    Text(
-////            text = "Hello $name!",
-////            modifier = modifier
-////    )
-////}
+    private fun checkUserAuthentication(): String {
+        val user = FirebaseAuth.getInstance().currentUser
+        if(user != null) {
+            return Routes.MainPage.value
+        } else {
+            return Routes.LoginSelection.value
+        }
+    }
+
+    private fun launchSignInFlow() {
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.EmailBuilder().build(),
+            AuthUI.IdpConfig.GoogleBuilder().build()
+            // Add other providers as needed
+        )
+
+        val signInIntent = AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setAvailableProviders(providers)
+            .build()
+
+        signInLauncher.launch(signInIntent)
+    }
+
+    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
+        if (result.resultCode == RESULT_OK) {
+            // Successfully signed in
+            val user = FirebaseAuth.getInstance().currentUser
+            // Navigate to main part of the app
+        } else {
+            // Handle the error or cancellation
+            // Optionally, you could prompt the user to try again or handle errors specifically
+        }
+    }
+}
 

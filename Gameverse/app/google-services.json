@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1070753062959",
+    "project_id": "gameverse-8778d",
+    "storage_bucket": "gameverse-8778d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070753062959:android:715f675f1c9739a92266da",
+        "android_client_info": {
+          "package_name": "com.example.gameverse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1070753062959-o7kti0ld9b3f4ojt6r6qp35c77jrvj6r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gameverse",
+            "certificate_hash": "6eeda0771ce08b4f2a68f7dbee730df6dab7f5c1"
+          }
+        },
+        {
+          "client_id": "1070753062959-pi4fvejuc9kc59veppq2n3dupvdni1cu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq-_fmAteIfkPQrwZ-N8LynC_GkYzFOzI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1070753062959-pi4fvejuc9kc59veppq2n3dupvdni1cu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
