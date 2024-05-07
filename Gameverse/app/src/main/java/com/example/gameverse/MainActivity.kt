@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     NavHost(navController = navController, startDestination = isLoggedIn, builder = {
                         composable(Routes.LoginSelection.value) {
-                            LoginSelectionScreen(navController = navController, ::launchSignInFlow)
+                            LoginSelectionScreen(navController = navController, ::launchSignInFlow )
                         }
                         composable(Routes.MainPage.value){
                             BottomNavigationBar()
