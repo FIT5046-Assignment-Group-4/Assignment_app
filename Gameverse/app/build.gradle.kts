@@ -47,6 +47,14 @@ android {
 }
 
 dependencies {
+    //Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.google.code.gson:gson:2.10")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+    //coil
+    implementation("io.coil-kt:coil:1.3.0")
 
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
@@ -70,4 +78,5 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation ("androidx.compose.ui:ui:1.0.0")
     implementation ("androidx.compose.material:material:1.0.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.1")
 }
