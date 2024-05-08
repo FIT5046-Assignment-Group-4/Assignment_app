@@ -1,5 +1,8 @@
 package com.example.gameverse.network
 
+import com.google.gson.annotations.SerializedName
+
 data class GameList(
-    val result: List<GameDto>
+    @SerializedName("results")
+    val result: List<GameDto> = ArrayList()
 )
