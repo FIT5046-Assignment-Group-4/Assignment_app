@@ -41,6 +41,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -52,10 +53,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 
 @Composable
 fun Home(navController: NavHostController) {
+    val gameViewModel: GameViewModel = viewModel()
+    val popularGameReturn by gameViewModel.retrofitPopulart
+    val popularGameList = popularGameReturn.result
+    val latestGameReturn by gameViewModel.retrofitLatest
+    val latestGameList = latestGameReturn.result
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -63,35 +72,6 @@ fun Home(navController: NavHostController) {
         //contentAlignment = Alignment.TopCenter
     )
     {
-        var languages = listOf(
-            "Game1",
-            "Game2",
-            "Game3",
-            "Game4",
-            "Game5",
-            "Game6",
-            "Game7"
-        )
-
-        var imageId = arrayOf(
-            R.drawable.img_game_1,
-            R.drawable.img_game_2,
-            R.drawable.img_game_3
-        )
-
-        var names = arrayOf(
-            "Apex Legends",
-            "Dragon's Dogma 2",
-            "Final Fantasy VII REMAKE INTERGRADE"
-
-        )
-
-        var prices = arrayOf(
-            "$0.00",
-            "$0.00",
-            "$0.00"
-        )
-
         Column(
             //horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(10.dp)
@@ -107,24 +87,24 @@ fun Home(navController: NavHostController) {
             Spacer(modifier = Modifier.size(10.dp))
 
 
-            var searchText by remember { mutableStateOf("") }
-            CustomEdit(
-                text = searchText,
-                onValueChange = {
-                    searchText = it
-                },
-                hint = "Search",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 5.dp, top = 0.dp, end = 5.dp, bottom = 5.dp)
-                    .height(50.dp)
-                    .background(Color(0xBCE9E9E9), shape = MaterialTheme.shapes.medium)
-                    .padding(horizontal = 16.dp),
-                // textStyle = Typography.bodyMedium,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            )
-
-            Spacer(modifier = Modifier.size(10.dp))
+//            var searchText by remember { mutableStateOf("") }
+//            CustomEdit(
+//                text = searchText,
+//                onValueChange = {
+//                    searchText = it
+//                },
+//                hint = "Search",
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(start = 5.dp, top = 0.dp, end = 5.dp, bottom = 5.dp)
+//                    .height(50.dp)
+//                    .background(Color(0xBCE9E9E9), shape = MaterialTheme.shapes.medium)
+//                    .padding(horizontal = 16.dp),
+//                // textStyle = Typography.bodyMedium,
+//                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+//            )
+//
+//            Spacer(modifier = Modifier.size(10.dp))
 
             Text(
                 text = "WHAT'S NEW",
@@ -132,11 +112,21 @@ fun Home(navController: NavHostController) {
                 textAlign = TextAlign.Start,
                 modifier = Modifier.padding(bottom = 5.dp)
             )
-            Image(
-                painter = painterResource(id = R.drawable.what_new),
-                contentDescription = "What is New",
-                modifier = Modifier.padding(bottom = 5.dp)
-            )
+//            Image(
+//                painter = painterResource(id = R.drawable.what_new),
+//                contentDescription = "What is New",
+//                modifier = Modifier.padding(bottom = 5.dp)
+//            )
+            LazyRow(contentPadding = PaddingValues(5.dp)) {
+                items(latestGameList) { item ->
+                    RowItem(
+                        backgroudImage = item.backgroundImage,
+                        gameName = item.name,
+                        rating = item.rating,
+                        modifier = Modifier
+                    )
+                }
+            }
 
             Spacer(modifier = Modifier.size(5.dp))
             Text(
@@ -144,13 +134,11 @@ fun Home(navController: NavHostController) {
             )
 
             LazyRow(contentPadding = PaddingValues(5.dp)) {
-                val itemCount = imageId.size
-                items(itemCount) { item ->
+                items(popularGameList) { item ->
                     RowItem(
-                        itemIndex = item,
-                        painter = imageId,
-                        title = names,
-                        price = prices,
+                        backgroudImage = item.backgroundImage,
+                        gameName = item.name,
+                        rating = item.rating,
                         modifier = Modifier
                     )
                 }
@@ -168,10 +156,9 @@ fun Home(navController: NavHostController) {
 
 @Composable
 fun RowItem(
-    itemIndex: Int,
-    painter: Array<Int>,
-    title: Array<String>,
-    price: Array<String>,
+    backgroudImage: String,
+    gameName: String,
+    rating: Double,
     modifier: Modifier
 ) {
     Card(
@@ -179,25 +166,29 @@ fun RowItem(
             .padding(5.dp)
             .wrapContentSize()
             .fillMaxWidth()
-            .height(200.dp),
+            .height(240.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.White
         ),
         elevation = CardDefaults.cardElevation(5.dp)
     ) {
-        Column(modifier.width(234.dp)) {
-            Image(
-                painter = painterResource(id = painter[itemIndex]),
-                contentDescription = title[itemIndex],
-                modifier = Modifier.padding(bottom = 5.dp)
+        Column(modifier.width(280.dp)) {
+            AsyncImage(
+                model = backgroudImage,
+                contentDescription = null,
+                modifier = Modifier
+                    .height(180.dp)
+                    .width(280.dp)
+                    .padding(bottom = 5.dp),
+                contentScale = ContentScale.Crop
             )
             Text(
-                text = title[itemIndex],
+                text = gameName,
                 fontSize = 18.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Clip
             )
-            Text(text = price[itemIndex], fontSize = 18.sp)
+            Text(text = "Rating: ${rating}", fontSize = 18.sp)
         }
     }
 }

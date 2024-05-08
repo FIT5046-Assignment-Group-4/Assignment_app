@@ -21,11 +21,17 @@ class GameViewModel: ViewModel() {
 
     private val repository = GameRepository()
     val retrofitResponse: MutableState <GameList> = mutableStateOf(GameList())
+    val retrofitPopulart: MutableState <GameList> = mutableStateOf(GameList())
+    val retrofitLatest: MutableState <GameList> = mutableStateOf(GameList())
 
     init {
         viewModelScope.launch {
             val resReturned = repository.getResponse()
             retrofitResponse.value = resReturned
+            val resPopular = repository.getPopularGames()
+            retrofitPopulart.value = resPopular
+            val resLatest = repository.getLatestGames()
+            retrofitLatest.value = resLatest
         }
     }
 }

@@ -10,4 +10,12 @@ class GameRepository {
     suspend fun getResponse(search: String?=null): GameList {
         return searchService.getGameList(API_KEY,search)
     }
+
+    suspend fun getPopularGames(): GameList{
+        return searchService.getGameList(API_KEY, ordering = "-rating", PAGE_SIZE = 6)
+    }
+
+    suspend fun getLatestGames(): GameList{
+        return searchService.getGameList(API_KEY, ordering = "-added", PAGE_SIZE = 6)
+    }
 }
