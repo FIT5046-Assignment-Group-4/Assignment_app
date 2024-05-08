@@ -8,6 +8,7 @@ interface ApiService {
     suspend fun getGameList(
         @Query("key") key: String,
         @Query("search") search: String?=null,
+        @Query("ordering") ordering: String?=null
     ): GameList
 
 }

@@ -16,16 +16,22 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class GameViewModel: ViewModel() {
-//    private val _gameData = MutableStateFlow<List<GameDto>>(emptyList())
-//    val gameData: StateFlow<List<GameDto>> = _gameData.asStateFlow()
 
     private val repository = GameRepository()
     val retrofitResponse: MutableState <GameList> = mutableStateOf(GameList())
 
     init {
         viewModelScope.launch {
-            val resReturned = repository.getResponse()
+            val resReturned = repository.loadGameList()
             retrofitResponse.value = resReturned
         }
+    }
+
+    fun searchGame(keyword: String ) {
+        viewModelScope.launch {
+            val responseReturned = repository.loadGameList(keyword)
+            retrofitResponse.value = responseReturned
+        }
+
     }
 }
