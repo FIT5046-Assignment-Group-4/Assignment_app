@@ -2,6 +2,7 @@ package com.example.gameverse
 
 import android.util.Log
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,17 +21,20 @@ class GameViewModel: ViewModel() {
 
     private val repository = GameRepository()
     val retrofitResponse: MutableState <GameList> = mutableStateOf(GameList())
-    val retrofitPopulart: MutableState <GameList> = mutableStateOf(GameList())
+    val retrofitPopular: MutableState <GameList> = mutableStateOf(GameList())
     val retrofitLatest: MutableState <GameList> = mutableStateOf(GameList())
 
-    private val detailRes: MutableState<GameDetail?> = mutableStateOf(null)
+    private val _gameDetails = mutableStateOf<GameDetail?>(null)
+    val gameDetails: State<GameDetail?> = _gameDetails
 
     init {
         viewModelScope.launch {
             val resReturned = repository.loadGameList()
             retrofitResponse.value = resReturned
+
             val resPopular = repository.getPopularGames()
-            retrofitPopulart.value = resPopular
+            retrofitPopular.value = resPopular
+
             val resLatest = repository.getLatestGames()
             retrofitLatest.value = resLatest
         }
@@ -46,7 +50,7 @@ class GameViewModel: ViewModel() {
     fun loadGameDetail(gameId: Int) {
         viewModelScope.launch {
             val responseReturned = repository.loadGameDetail(gameId)
-            detailRes.value = responseReturned
+            _gameDetails.value = responseReturned
         }
     }
 }

@@ -13,8 +13,9 @@ class GameRepository {
     }
 
 //<<<<<<< HEAD
-//    suspend fun loadGameDetail(gameId: Int): GameDetail {
-//        return service.getGameDetail(gameId,API_KEY)
+    suspend fun loadGameDetail(gameId: Int): GameDetail {
+        return service.getGameDetail(gameId, API_KEY)
+    }
 //=======
     suspend fun getPopularGames(): GameList{
         return service.getGameList(API_KEY, ordering = "-rating", PAGE_SIZE = 6)

@@ -61,7 +61,7 @@ import com.example.gameverse.network.GameDto
 @Composable
 fun Home(navController: NavHostController) {
     val gameViewModel: GameViewModel = viewModel()
-    val popularGameReturn by gameViewModel.retrofitPopulart
+    val popularGameReturn by gameViewModel.retrofitPopular
     val popularGameList = popularGameReturn.result
     val latestGameReturn by gameViewModel.retrofitLatest
     val latestGameList = latestGameReturn.result
