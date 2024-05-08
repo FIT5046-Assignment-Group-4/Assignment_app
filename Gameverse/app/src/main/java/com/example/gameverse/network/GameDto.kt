@@ -12,3 +12,13 @@ data class GameDto(
     val ratingTop: Int,
     val released: String,
 )
+
+data class GameDetail(
+    val id: Int,
+    val name: String,
+    val rating: Double,
+    @SerializedName("description_raw")
+    val description: String,
+    @SerializedName("background_image")
+    val backgroundImage: String
+)

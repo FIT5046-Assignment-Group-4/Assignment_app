@@ -6,3 +6,4 @@ data class GameList(
     @SerializedName("results")
     val result: List<GameDto> = ArrayList()
 )
+

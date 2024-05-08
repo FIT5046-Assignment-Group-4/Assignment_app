@@ -1,6 +1,7 @@
 package com.example.gameverse
 
 import com.example.gameverse.network.ApiClient
+import com.example.gameverse.network.GameDetail
 import com.example.gameverse.network.GameList
 
 class GameRepository {
@@ -9,5 +10,9 @@ class GameRepository {
 
     suspend fun loadGameList(search: String?=null, ordering: String?=null): GameList {
         return service.getGameList(API_KEY,search,ordering)
+    }
+
+    suspend fun loadGameDetail(gameId: Int): GameDetail {
+        return service.getGameDetail(gameId,API_KEY)
     }
 }

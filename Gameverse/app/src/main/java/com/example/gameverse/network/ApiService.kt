@@ -1,6 +1,7 @@
 package com.example.gameverse.network
 
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
@@ -11,4 +12,9 @@ interface ApiService {
         @Query("ordering") ordering: String?=null
     ): GameList
 
+    @GET("games/{gameId}")
+    suspend fun getGameDetail(
+        @Path("gameId") gameId: Int,
+        @Query("key") key: String
+    ): GameDetail
 }

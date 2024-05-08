@@ -69,7 +69,9 @@ fun BottomNavigationBar() {
             composable(Routes.EditAccount.value) {
                 EditAccounts(navController)
             }
-            composable(Routes.Report.value) {
+            composable(Routes.Report.value+"/{gameId}") {
+                navBackStack ->
+                val data = navBackStack.arguments?.getInt("gameId")
                 Report(navController)
             }
         }
