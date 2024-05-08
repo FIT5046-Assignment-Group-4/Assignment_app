@@ -13,10 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 
 @RequiresApi(0)
 @Composable
@@ -69,10 +71,21 @@ fun BottomNavigationBar() {
             composable(Routes.EditAccount.value) {
                 EditAccounts(navController)
             }
-            composable(Routes.Report.value+"/{gameId}") {
-                navBackStack ->
-                val data = navBackStack.arguments?.getInt("gameId")
-                Report(navController)
+//<<<<<<< HEAD
+//            composable(Routes.Report.value+"/{gameId}") {
+//                navBackStack ->
+//                val data = navBackStack.arguments?.getInt("gameId")
+//                Report(navController)
+//=======
+            composable(Routes.Report.value + "/{gameId}",
+                arguments = listOf(navArgument("gameId"){ type = NavType.IntType}
+                )
+            ) {backStackEntry ->
+                val gameId = backStackEntry.arguments?.getInt("gameId", 0)
+                if (gameId != null) {
+                    Report(navController, gameId)
+                }
+//>>>>>>> origin/new_home_page
             }
         }
     }

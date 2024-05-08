@@ -96,7 +96,7 @@ fun Browse(navController: NavHostController) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(5.dp)
-                            .clickable(onClick = { navController.navigate(Routes.Report.value) }),
+                            .clickable(onClick = { navController.navigate(Routes.Report.value + "/${item.id}") }),
                         elevation = CardDefaults.cardElevation(5.dp),
                         colors = CardDefaults.cardColors(
                             containerColor = Color.White

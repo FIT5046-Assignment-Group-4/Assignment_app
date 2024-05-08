@@ -9,7 +9,8 @@ interface ApiService {
     suspend fun getGameList(
         @Query("key") key: String,
         @Query("search") search: String?=null,
-        @Query("ordering") ordering: String?=null
+        @Query("ordering") ordering: String?=null,
+        @Query("page_size") PAGE_SIZE: Int?=null,
     ): GameList
 
     @GET("games/{gameId}")
