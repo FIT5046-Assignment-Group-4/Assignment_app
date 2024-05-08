@@ -19,40 +19,25 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : ComponentActivity() {
 
-    private val signInLauncher = registerForActivityResult(
-        FirebaseAuthUIActivityResultContract()
-    ) { res -> this.onSignInResult(res) }
-
     @RequiresApi(64)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
-            val isLoggedIn = checkUserAuthentication()
 
             GameverseTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    NavHost(navController = navController, startDestination = isLoggedIn, builder = {
-                        composable(Routes.LoginSelection.value) {
-                            LoginSelectionScreen(navController = navController, ::launchSignInFlow )
-                        }
-                        composable(Routes.MainPage.value){
-                            BottomNavigationBar()
-                        }
-                    })
+                    BottomNavigationBar(::launchSignInFlow)
                 }
             }
         }
     }
 
-    private fun checkUserAuthentication(): String {
-        val user = FirebaseAuth.getInstance().currentUser
-        if(user != null) {
-            return Routes.MainPage.value
-        } else {
-            return Routes.LoginSelection.value
-        }
-    }
+    private val signInLauncher = registerForActivityResult(
+        FirebaseAuthUIActivityResultContract()
+    ) { res -> this.onSignInResult(res) }
+
+
 
     private fun launchSignInFlow() {
         val providers = arrayListOf(
@@ -64,6 +49,7 @@ class MainActivity : ComponentActivity() {
         val signInIntent = AuthUI.getInstance()
             .createSignInIntentBuilder()
             .setAvailableProviders(providers)
+            .setLogo(R.drawable.logo_3x)
             .build()
 
         signInLauncher.launch(signInIntent)

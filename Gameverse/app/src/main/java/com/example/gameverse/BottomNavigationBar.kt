@@ -4,8 +4,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -19,10 +17,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.FirebaseAuth
 
 @RequiresApi(0)
 @Composable
-fun BottomNavigationBar() {
+fun BottomNavigationBar(launchSignInFlow: () -> Unit) {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
@@ -48,7 +47,8 @@ fun BottomNavigationBar() {
                             restoreState = true }
                     }
                 )
-                } }
+                }
+            }
         }
     ) { paddingValues ->
         NavHost(
@@ -57,7 +57,7 @@ fun BottomNavigationBar() {
             Modifier.padding(paddingValues)
         ){
             composable(Routes.Home.value) {
-                Home(navController)
+                Home(navController, launchSignInFlow)
             }
             composable(Routes.Browse.value) {
                 Browse(navController)
@@ -70,6 +70,9 @@ fun BottomNavigationBar() {
             }
             composable(Routes.EditAccount.value) {
                 EditAccounts(navController)
+            }
+            composable(Routes.LoginSelection.value) {
+                LoginSelectionScreen(navController = navController, launchSignInFlow )
             }
         }
     }

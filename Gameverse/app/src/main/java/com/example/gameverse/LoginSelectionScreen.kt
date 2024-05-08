@@ -23,7 +23,7 @@ import kotlin.reflect.KFunction0
 
 @Composable
 fun LoginSelectionScreen(navController: NavController, launchSignInFlow: () -> Unit){
-    launchSignInFlow()
+
     Column(
         Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,

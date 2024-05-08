@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,7 +17,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -48,14 +46,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun Home(navController: NavHostController) {
+fun Home(navController: NavHostController, launchSignInFlow: () -> Unit) {
+    checkUserAuthentication(launchSignInFlow)
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -154,6 +153,13 @@ fun Home(navController: NavHostController) {
     }
 
 
+}
+
+private fun checkUserAuthentication(launchSignInFlow: () -> Unit) {
+    val user = FirebaseAuth.getInstance().currentUser
+    if(user == null) {
+        launchSignInFlow()
+    }
 }
 
 @Composable
@@ -255,4 +261,3 @@ fun CustomEdit(
         }
     )
 }
-
