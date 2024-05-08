@@ -58,14 +58,14 @@ import coil.compose.AsyncImage
 import com.google.android.gms.wallet.button.ButtonConstants
 
 @Composable
-fun Report(navController: NavHostController) {
+fun Report(navController: NavHostController, gameId: Int?) {
 
     Column(modifier = Modifier.fillMaxWidth()) {
         TopAppBar(
             modifier = Modifier.fillMaxWidth(),
             title =
             {
-                Text(text = "CS:GO")
+                Text(text = "GameId = $gameId")
             },
             navigationIcon = {
                 IconButton(onClick = { navController.navigateUp() }) {  // This will navigate back when clicked
@@ -91,7 +91,7 @@ fun Report(navController: NavHostController) {
             )
         }
         Text(
-            text = "CS:GO",
+            text = "gameId = $gameId",
             fontSize = 25.0.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(start = 5.dp)
