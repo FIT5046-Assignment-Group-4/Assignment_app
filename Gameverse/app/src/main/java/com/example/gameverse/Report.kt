@@ -60,11 +60,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.example.gameverse.local.GameEntity
+import com.example.gameverse.local.LocalDatabaseViewModel
 import com.google.android.gms.wallet.button.ButtonConstants
 
 @Composable
 fun Report(navController: NavHostController, gameId: Int) {
     val gameViewModel: GameViewModel = viewModel()
+    val likeViewModel: LocalDatabaseViewModel = viewModel()
     val detailReturn by gameViewModel.retrofitDetail
     val data = detailReturn
 
@@ -73,7 +76,9 @@ fun Report(navController: NavHostController, gameId: Int) {
     }
 
 
-    Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .verticalScroll(rememberScrollState())) {
         //top bar
         TopAppBar(
             modifier = Modifier.fillMaxWidth(),
@@ -122,11 +127,21 @@ fun Report(navController: NavHostController, gameId: Int) {
             thickness = 3.dp,
             modifier = Modifier.padding(vertical = 5.dp))
 
-        Box(modifier = Modifier.align(Alignment.CenterHorizontally)
+        Box(modifier = Modifier
+            .align(Alignment.CenterHorizontally)
             .fillMaxWidth()
             .padding(16.dp)) {
             Button(
-                onClick = { /* TODO */} ,
+                onClick = {
+                          likeViewModel.insertGame(
+                              GameEntity(id = gameId,
+                                  name = data.name,
+                                  backgroundImage = data.backgroundImage,
+                                  rating = data.rating,
+                                  ratingTop = 0
+                                  )
+                          )
+                } ,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
