@@ -4,7 +4,7 @@ import com.example.gameverse.network.ApiClient
 import com.example.gameverse.network.GameDetail
 import com.example.gameverse.network.GameList
 
-class GameRepository {
+class ItemRepository {
     private val service = ApiClient.apiService
     private val API_KEY = "7139aadd1c63493c973dc3b5c0156464"
 

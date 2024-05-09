@@ -1,6 +1,7 @@
 package com.example.gameverse
 
 import android.media.Image
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -52,6 +53,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -70,6 +72,8 @@ fun Report(navController: NavHostController, gameId: Int) {
     val likeViewModel: LocalDatabaseViewModel = viewModel()
     val detailReturn by gameViewModel.retrofitDetail
     val data = detailReturn
+
+    val context = LocalContext.current
 
     LaunchedEffect(gameId) {
         gameViewModel.loadGameDetail(gameId)
@@ -141,6 +145,7 @@ fun Report(navController: NavHostController, gameId: Int) {
                                   ratingTop = 0
                                   )
                           )
+                    Toast.makeText(context,"Game is added to favorite list",Toast.LENGTH_SHORT).show()
                 } ,
                 modifier = Modifier
                     .fillMaxWidth()

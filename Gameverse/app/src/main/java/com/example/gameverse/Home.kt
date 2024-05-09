@@ -73,28 +73,6 @@ fun Home(navController: NavHostController) {
         //contentAlignment = Alignment.TopCenter
     )
     {
-//<<<<<<< HEAD
-//        var imageId = arrayOf(
-//            R.drawable.img_game_1,
-//            R.drawable.img_game_2,
-//            R.drawable.img_game_3
-//        )
-//
-//        var names = arrayOf(
-//            "Apex Legends",
-//            "Dragon's Dogma 2",
-//            "Final Fantasy VII REMAKE INTERGRADE"
-//
-//        )
-//
-//        var prices = arrayOf(
-//            "$0.00",
-//            "$0.00",
-//            "$0.00"
-//        )
-//
-//=======
-//>>>>>>> browsePage
         Column(
             //horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(10.dp)

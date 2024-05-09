@@ -17,4 +17,5 @@ interface GameDAO{
 
     @Delete
     suspend fun deleteGame(game: GameEntity)
+
 }
