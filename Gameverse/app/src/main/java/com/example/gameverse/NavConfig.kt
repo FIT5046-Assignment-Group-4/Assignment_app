@@ -76,7 +76,9 @@ fun BottomNavigationBar() {
                 )
             ) {backStackEntry ->
                 val gameId = backStackEntry.arguments?.getInt("gameId", 0)
-                Report(navController, gameId)
+                if (gameId != null) {
+                    Report(navController, gameId)
+                }
             }
         }
     }

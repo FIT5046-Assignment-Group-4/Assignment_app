@@ -61,7 +61,7 @@ import com.example.gameverse.network.GameDto
 @Composable
 fun Home(navController: NavHostController) {
     val gameViewModel: GameViewModel = viewModel()
-    val popularGameReturn by gameViewModel.retrofitPopulart
+    val popularGameReturn by gameViewModel.retrofitPopular
     val popularGameList = popularGameReturn.result
     val latestGameReturn by gameViewModel.retrofitLatest
     val latestGameList = latestGameReturn.result
@@ -73,6 +73,28 @@ fun Home(navController: NavHostController) {
         //contentAlignment = Alignment.TopCenter
     )
     {
+//<<<<<<< HEAD
+//        var imageId = arrayOf(
+//            R.drawable.img_game_1,
+//            R.drawable.img_game_2,
+//            R.drawable.img_game_3
+//        )
+//
+//        var names = arrayOf(
+//            "Apex Legends",
+//            "Dragon's Dogma 2",
+//            "Final Fantasy VII REMAKE INTERGRADE"
+//
+//        )
+//
+//        var prices = arrayOf(
+//            "$0.00",
+//            "$0.00",
+//            "$0.00"
+//        )
+//
+//=======
+//>>>>>>> browsePage
         Column(
             //horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(10.dp)
@@ -118,11 +140,6 @@ fun Home(navController: NavHostController) {
                     )
                 }
             }
-
-            //Text(text = "Home Screen",
-            //    style = MaterialTheme.typography.headlineMedium)
-            //Spacer(modifier = Modifier.size(30.dp))
-            //Text("Welcome to Navigation app", style = MaterialTheme.typography.bodyLarge)
         }
     }
 
