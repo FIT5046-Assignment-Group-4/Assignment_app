@@ -118,11 +118,6 @@ fun Home(navController: NavHostController) {
                     )
                 }
             }
-
-            //Text(text = "Home Screen",
-            //    style = MaterialTheme.typography.headlineMedium)
-            //Spacer(modifier = Modifier.size(30.dp))
-            //Text("Welcome to Navigation app", style = MaterialTheme.typography.bodyLarge)
         }
     }
 

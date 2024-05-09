@@ -71,12 +71,6 @@ fun BottomNavigationBar() {
             composable(Routes.EditAccount.value) {
                 EditAccounts(navController)
             }
-//<<<<<<< HEAD
-//            composable(Routes.Report.value+"/{gameId}") {
-//                navBackStack ->
-//                val data = navBackStack.arguments?.getInt("gameId")
-//                Report(navController)
-//=======
             composable(Routes.Report.value + "/{gameId}",
                 arguments = listOf(navArgument("gameId"){ type = NavType.IntType}
                 )
@@ -85,7 +79,6 @@ fun BottomNavigationBar() {
                 if (gameId != null) {
                     Report(navController, gameId)
                 }
-//>>>>>>> origin/new_home_page
             }
         }
     }

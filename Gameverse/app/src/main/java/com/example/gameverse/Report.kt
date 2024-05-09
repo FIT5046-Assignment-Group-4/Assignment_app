@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme.colors
@@ -45,6 +47,7 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberTopAppBarState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.scale
@@ -60,137 +63,23 @@ import coil.compose.AsyncImage
 import com.google.android.gms.wallet.button.ButtonConstants
 
 @Composable
-//<<<<<<< HEAD
-//fun Report(navController: NavHostController, gameId: Int) {
-
-//    Column(modifier = Modifier.fillMaxWidth()) {
-//        TopAppBar(
-//            modifier = Modifier.fillMaxWidth(),
-//            title =
-//            {
-//                Text(text = "CS:GO")
-//            },
-//            navigationIcon = {
-//                IconButton(onClick = { navController.navigateUp() }) {  // This will navigate back when clicked
-//                    Icon(
-//                        imageVector = Icons.Filled.ArrowBack,
-//                        contentDescription = "Back"
-//                    )
-//                }
-//            },
-//            backgroundColor = Color.White,
-//            contentColor = Color.White,
-//            elevation = 8.dp
-//        )
-//        Box(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(10.dp)
-//        ) {
-//            Image(
-//                painter = painterResource(id = R.drawable.fb_image),
-//                contentDescription = "What is New",
-//                modifier = Modifier.padding(bottom = 5.dp)
-//            )
-//        }
-//        Text(
-//            text = "CS:GO",
-//            fontSize = 25.0.sp,
-//            fontWeight = FontWeight.Bold,
-//            modifier = Modifier.padding(start = 5.dp)
-//        )
-//        Divider(color = Color.LightGray,
-//            thickness = 3.dp,
-//            modifier = Modifier.padding(vertical = 5.dp))
-//        Text(
-//            text ="Counter-Strike: Global Offensive (CS:GO) is a 2012 multiplayer tactical first-person shooter developed by Valve and Hidden Path Entertainment. " +
-//                    "It is the fourth game in the Counter-Strike series. " +
-//                    "Developed for over two years, Global Offensive was released for OS X, " +
-//                    "PlayStation 3, Windows, and Xbox 360 in August 2012, and for Linux in 2014.",
-//            modifier = Modifier.padding(5.dp)
-//        )
-//        Divider(color = Color.LightGray,
-//            thickness = 3.dp,
-//            modifier = Modifier.padding(vertical = 5.dp))
-//
-//        Text(
-//            text = "Game evaluation",
-//            fontSize = 15.sp,
-//            fontWeight = FontWeight.SemiBold,
-//            modifier = Modifier.padding(start = 5.dp)
-//        )
-//
-//        Image(
-//            painterResource(id = R.drawable.rating),
-//            contentDescription = "",
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .scale(1.8f)
-//                .padding(top = 18.dp)
-//        )
-//
-//        Divider(color = Color.LightGray,
-//            thickness = 3.dp,
-//            modifier = Modifier.padding(top = 40.dp, bottom = 20.dp))
-//
-//        Row(modifier =  Modifier.fillMaxWidth(),
-//            horizontalArrangement = Arrangement.Center) {
-//            for(i in 1..5) {
-//                Icon(
-//                    Icons.Outlined.Star,
-//                    contentDescription = " ",
-//                    modifier = Modifier.padding(end = 10.dp)
-//                )
-//            }
-//        }
-//        Row(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(10.dp),
-//            horizontalArrangement = Arrangement.Center
-//        ) {
-//            Button(
-//                onClick = { /* TODO */ },
-//                colors = ButtonDefaults.buttonColors(
-//                    backgroundColor = Color.LightGray,
-//                    contentColor = Color.White
-//                )
-//            ) {
-//                Text(text = "I want to rate")
-//            }
-//        }
-//
-//        Box(modifier = Modifier.align(Alignment.CenterHorizontally)
-//            .fillMaxWidth()
-//            .padding(16.dp)) {
-//            Button(
-//                onClick = { /* TODO */} ,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(16.dp),
-//                colors = ButtonDefaults.buttonColors(
-//                    backgroundColor = Color.Gray,
-//                    contentColor = Color.White
-//                )
-//
-//            ) {
-//                Text(text = "Add to Favorite List")
-//            }
-//        }
-//
-//=======
 fun Report(navController: NavHostController, gameId: Int) {
     val gameViewModel: GameViewModel = viewModel()
-    val data = gameViewModel.loadGameDetail(gameId)
+    val detailReturn by gameViewModel.retrofitDetail
+    val data = detailReturn
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    LaunchedEffect(gameId) {
+        gameViewModel.loadGameDetail(gameId)
+    }
+
+
+    Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+        //top bar
         TopAppBar(
             modifier = Modifier.fillMaxWidth(),
             title =
             {
-                if (data != null) {
-                    //Text(text = "GameId = ${data}")
-                }
+                Text(text = data.name)
             },
             navigationIcon = {
                 IconButton(onClick = { navController.navigateUp() }) {  // This will navigate back when clicked
@@ -204,19 +93,20 @@ fun Report(navController: NavHostController, gameId: Int) {
             contentColor = Color.White,
             elevation = 8.dp
         )
+        //content
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.fb_image),
+            AsyncImage(
+                model = data.backgroundImage,
                 contentDescription = "What is New",
                 modifier = Modifier.padding(bottom = 5.dp)
             )
         }
         Text(
-            text = "gameId = $gameId",
+            text = data.name,
             fontSize = 25.0.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(start = 5.dp)
@@ -225,62 +115,12 @@ fun Report(navController: NavHostController, gameId: Int) {
             thickness = 3.dp,
             modifier = Modifier.padding(vertical = 5.dp))
         Text(
-            text ="Counter-Strike: Global Offensive (CS:GO) is a 2012 multiplayer tactical first-person shooter developed by Valve and Hidden Path Entertainment. " +
-                    "It is the fourth game in the Counter-Strike series. " +
-                    "Developed for over two years, Global Offensive was released for OS X, " +
-                    "PlayStation 3, Windows, and Xbox 360 in August 2012, and for Linux in 2014.",
+            text = data.description,
             modifier = Modifier.padding(5.dp)
         )
         Divider(color = Color.LightGray,
             thickness = 3.dp,
             modifier = Modifier.padding(vertical = 5.dp))
-
-        Text(
-            text = "Game evaluation",
-            fontSize = 15.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(start = 5.dp)
-        )
-
-        Image(
-            painterResource(id = R.drawable.rating),
-            contentDescription = "",
-            modifier = Modifier
-                .fillMaxWidth()
-                .scale(1.8f)
-                .padding(top = 18.dp)
-        )
-
-        Divider(color = Color.LightGray,
-            thickness = 3.dp,
-            modifier = Modifier.padding(top = 40.dp, bottom = 20.dp))
-
-        Row(modifier =  Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center) {
-            for(i in 1..5) {
-                Icon(
-                    Icons.Outlined.Star,
-                    contentDescription = " ",
-                    modifier = Modifier.padding(end = 10.dp)
-                )
-            }
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Button(
-                onClick = { /* TODO */ },
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color.LightGray,
-                    contentColor = Color.White
-                )
-            ) {
-                Text(text = "I want to rate")
-            }
-        }
 
         Box(modifier = Modifier.align(Alignment.CenterHorizontally)
             .fillMaxWidth()
@@ -302,13 +142,3 @@ fun Report(navController: NavHostController, gameId: Int) {
 
     }
 }
-
-
-//@Preview
-//@Composable
-//fun ReportPreview() {
-//    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-//        Report()
-//>>>>>>> origin/new_home_page
-//    }
-//}

@@ -23,12 +23,11 @@ class GameViewModel: ViewModel() {
     val retrofitResponse: MutableState <GameList> = mutableStateOf(GameList())
     val retrofitPopular: MutableState <GameList> = mutableStateOf(GameList())
     val retrofitLatest: MutableState <GameList> = mutableStateOf(GameList())
-
-    private val _gameDetails = mutableStateOf<GameDetail?>(null)
-    val gameDetails: State<GameDetail?> = _gameDetails
+    val retrofitDetail: MutableState<GameDetail> = mutableStateOf(GameDetail(0,"",0.0,"",""))
 
     init {
         viewModelScope.launch {
+            //load default game list
             val resReturned = repository.loadGameList()
             retrofitResponse.value = resReturned
 
@@ -40,6 +39,7 @@ class GameViewModel: ViewModel() {
         }
     }
 
+    //search game by keyword
     fun searchGame(keyword: String ) {
         viewModelScope.launch {
             val responseReturned = repository.loadGameList(keyword)
@@ -47,10 +47,11 @@ class GameViewModel: ViewModel() {
         }
     }
 
+    //load game detail
     fun loadGameDetail(gameId: Int) {
         viewModelScope.launch {
             val responseReturned = repository.loadGameDetail(gameId)
-            _gameDetails.value = responseReturned
+            retrofitDetail.value = responseReturned
         }
     }
 }
