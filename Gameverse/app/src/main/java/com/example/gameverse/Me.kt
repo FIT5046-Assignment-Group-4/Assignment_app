@@ -66,7 +66,6 @@ fun Me(navController: NavHostController) {
         }
     ) {innerPadding ->
     Column(
-
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(innerPadding)) {
             Text(text = "Accounts Page", fontSize = 40.sp, fontWeight = FontWeight.Bold)
