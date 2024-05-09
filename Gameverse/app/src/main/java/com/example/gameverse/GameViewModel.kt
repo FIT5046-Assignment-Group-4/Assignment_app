@@ -16,7 +16,7 @@ class GameViewModel: ViewModel() {
     val retrofitResponse: MutableState <GameList> = mutableStateOf(GameList())
     val retrofitPopular: MutableState <GameList> = mutableStateOf(GameList())
     val retrofitLatest: MutableState <GameList> = mutableStateOf(GameList())
-    val retrofitDetail: MutableState<GameDetail> = mutableStateOf(GameDetail(0,"",0.0,"",""))
+    val retrofitDetail: MutableState<GameDetail> = mutableStateOf(GameDetail(0,"",0.0,"","", listOf()))
 
     init {
         viewModelScope.launch {

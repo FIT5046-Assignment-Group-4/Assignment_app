@@ -20,5 +20,13 @@ data class GameDetail(
     @SerializedName("description_raw")
     val description: String,
     @SerializedName("background_image")
-    val backgroundImage: String
+    val backgroundImage: String,
+    val ratings: List<Rating>
+)
+
+data class Rating(
+    val id: Int,
+    val title: String,
+    val count: Int,
+    val percent: Double
 )
