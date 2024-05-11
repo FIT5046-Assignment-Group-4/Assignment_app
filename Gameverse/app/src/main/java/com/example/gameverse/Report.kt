@@ -1,6 +1,8 @@
 package com.example.gameverse
 
+import android.annotation.SuppressLint
 import android.media.Image
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -49,6 +51,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.scale
@@ -62,10 +65,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.example.gameverse.components.BarChartScreen
 import com.example.gameverse.local.GameEntity
 import com.example.gameverse.local.LocalDatabaseViewModel
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.data.BarEntry
 import com.google.android.gms.wallet.button.ButtonConstants
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun Report(navController: NavHostController, gameId: Int) {
     val gameViewModel: GameViewModel = viewModel()
@@ -77,6 +84,12 @@ fun Report(navController: NavHostController, gameId: Int) {
 
     LaunchedEffect(gameId) {
         gameViewModel.loadGameDetail(gameId)
+    }
+
+    val barEntries by derivedStateOf {
+        data.ratings.map { rating ->
+            BarEntry(rating.id.toFloat(), rating.count.toFloat())
+        }
     }
 
 
@@ -130,6 +143,12 @@ fun Report(navController: NavHostController, gameId: Int) {
         Divider(color = Color.LightGray,
             thickness = 3.dp,
             modifier = Modifier.padding(vertical = 5.dp))
+
+        Box(modifier = Modifier
+            .height(350.dp)) {
+            BarChartScreen(barEntries = barEntries)
+        }
+
 
         Box(modifier = Modifier
             .align(Alignment.CenterHorizontally)
