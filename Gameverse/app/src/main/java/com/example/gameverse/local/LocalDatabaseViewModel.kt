@@ -8,10 +8,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LocalDatabaseViewModel(applicaton: Application) : AndroidViewModel(applicaton) {
+class LocalDatabaseViewModel(application: Application) : AndroidViewModel(application) {
     private val cRepository: GameRepository
     init {
-        cRepository = GameRepository(applicaton)
+        cRepository = GameRepository(application)
     }
     val allGames: LiveData<List<GameEntity>> = cRepository.allGames.asLiveData()
 
