@@ -11,6 +11,8 @@ import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.launch
@@ -18,11 +20,42 @@ import java.lang.Exception
 
 class LoginScreenViewModel: ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
+    val db = Firebase.firestore
+
+    private val _isUserLoggedIn = MutableLiveData<Boolean>()
+    val isUserLoggedIn: LiveData<Boolean> = _isUserLoggedIn
 
     val storageReference = Firebase.storage.reference
 
+    val userData = MutableLiveData<LocalUser?>()
+
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
+
+    init {
+        auth.addAuthStateListener { firebaseAuth ->
+            _isUserLoggedIn.value = firebaseAuth.currentUser != null
+        }
+    }
+
+    fun getData() {
+        val userId = auth.currentUser?.uid
+        val docRef = userId?.let { db.collection("users").document(it) }
+        if (docRef != null) {
+            docRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        val userData = document.toObject(LocalUser::class.java)
+                        Log.d("TAG", "DocumentSnapshot data: ${userData}")
+                    } else {
+                        Log.d("TAG", "No such document")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("TAG", "get failed with ", exception)
+                }
+        }
+    }
 
     fun signInWithEmailAndPassword(email: String, password: String,  home: () -> Unit)
             = viewModelScope.launch{
@@ -76,6 +109,25 @@ class LoginScreenViewModel: ViewModel() {
             .add(user)
     }
 
+    fun fetchUserDetails(userId: String) {
+        _loading.value = true
+        val docRef = FirebaseFirestore.getInstance().collection("users").document(userId)
+        docRef.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val document = task.result
+                if (document != null && document.exists()) {
+                    val user = document.toObject<LocalUser>()
+                    userData.value = user
+                } else {
+                    Log.d("FB", "No such document")
+                }
+            } else {
+                Log.d("FB", "get failed with ", task.exception)
+            }
+            _loading.value = false
+        }
+    }
+
     fun updateUserDetailsWithImage(firstName: String, lastName: String, location: String,
                                    gender: String, genre: String, dob: Long, imageUri: Uri?,
                                    home: () -> Unit) {
@@ -122,5 +174,9 @@ class LoginScreenViewModel: ViewModel() {
             } else {
             }
         }
+    }
+
+    fun signOut() {
+        Firebase.auth.signOut()
     }
 }

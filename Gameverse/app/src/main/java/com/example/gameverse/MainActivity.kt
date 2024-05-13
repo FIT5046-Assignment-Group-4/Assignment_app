@@ -12,8 +12,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.gameverse.navigation.GameverseNavigation
+import com.example.gameverse.navigation.MainPage
 import com.example.gameverse.ui.theme.GameverseTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +24,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
             GameverseTheme {
                 GameverseApp()
             }
@@ -36,7 +38,8 @@ fun GameverseApp() {
         color = MaterialTheme.colorScheme.background) {
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
-            GameverseNavigation(navController = rememberNavController())
+            MainPage(navController = rememberNavController())
         }
     }
 }
+

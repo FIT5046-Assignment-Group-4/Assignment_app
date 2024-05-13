@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.gameverse.components.GameverseLogo
 import com.example.gameverse.navigation.Routes
@@ -25,7 +24,11 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavHostController) {
+fun SplashScreen(
+    navController: NavHostController,
+    isBottomBarVisible: Boolean,
+    onBottomBarVisibilityChanged: (Boolean) -> Unit,
+) {
 
     val scale = remember {
         Animatable(0f)
@@ -42,8 +45,8 @@ fun SplashScreen(navController: NavHostController) {
         if (FirebaseAuth.getInstance().currentUser?.email.isNullOrBlank()) {
             navController.navigate(Routes.Login.value)
         } else {
-            navController.navigate(Routes.MainPage.value) {
-                popUpTo(0){}
+            navController.navigate(Routes.Home.value) {
+                onBottomBarVisibilityChanged(!isBottomBarVisible)
             }
         }
     }

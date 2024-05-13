@@ -17,7 +17,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -48,6 +47,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.gameverse.R
 import com.example.gameverse.components.GameverseLogo
@@ -56,8 +56,12 @@ import com.example.gameverse.utils.isValidEmail
 import com.example.gameverse.utils.isValidPassword
 
 @Composable
-fun LoginScreen(navController: NavController,
-                viewModel: LoginScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel()){
+fun LoginScreen(
+    navController: NavController,
+    isBottomBarVisible: Boolean,
+    onBottomBarVisibilityChanged: (Boolean) -> Unit,
+    viewModel: LoginScreenViewModel = viewModel()
+){
     val showLoginForm = rememberSaveable {
         mutableStateOf(true)
     }
@@ -67,7 +71,8 @@ fun LoginScreen(navController: NavController,
             GameverseLogo()
             if(showLoginForm.value) UserSignInForm(loading = false, isCreateAccount = false) { email, password ->
                 viewModel.signInWithEmailAndPassword(email, password) {
-                    navController.navigate(Routes.MainPage.value)
+                    onBottomBarVisibilityChanged(!isBottomBarVisible)
+                    navController.navigate(Routes.Home.value)
                 }
             }
             else {

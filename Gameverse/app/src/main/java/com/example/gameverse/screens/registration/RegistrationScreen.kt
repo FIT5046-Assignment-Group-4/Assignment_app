@@ -36,27 +36,31 @@ import com.example.gameverse.components.DisplayDatePicker
 import com.example.gameverse.navigation.Routes
 import com.example.gameverse.screens.home.GameViewModel
 import com.example.gameverse.screens.login.LoginScreenViewModel
-import com.google.firebase.auth.FirebaseAuth
 import java.util.Calendar
 
 @RequiresApi(0)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegistrationScreen(navController: NavController,
-                       viewModel: LoginScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
+fun RegistrationScreen(
+    navController: NavController,
+    isBottomBarVisible: Boolean,
+    onBottomBarVisibilityChanged: (Boolean) -> Unit,
+    viewModel: LoginScreenViewModel = viewModel()
+) {
     val gameViewModel: GameViewModel = viewModel()
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top) {
-            RegistrationForm() { firstName, lastName, location,
+            RegistrationForm(isBottomBarVisible,
+                onBottomBarVisibilityChanged) { firstName, lastName, location,
                                               selectedGender, selectedGenre, selectedImageUri,
                                               selectedDate ->
                 viewModel.updateUserDetailsWithImage(firstName, lastName, location,
                     selectedGender, selectedGenre, selectedDate, selectedImageUri
                     ) {
-                    navController.navigate(Routes.MainPage.value)
+                    navController.navigate(Routes.Home.value)
                 }
             }
 
@@ -66,6 +70,8 @@ fun RegistrationScreen(navController: NavController,
 
 @Composable
 fun RegistrationForm(
+    isBottomBarVisible: Boolean,
+    onBottomBarVisibilityChanged: (Boolean) -> Unit,
     onDone: (
         String, String, String, String, String, Uri, Long
             ) -> Unit)
@@ -146,6 +152,7 @@ fun RegistrationForm(
         })
 
         Button(onClick = {
+            onBottomBarVisibilityChanged(!isBottomBarVisible)
             selectedImageUri?.let {
                 onDone(firstName, lastName, location, selectedGender.value, selectedGenre.value,
                     it, selectedDate )

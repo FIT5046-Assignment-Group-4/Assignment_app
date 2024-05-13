@@ -8,8 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -32,13 +31,21 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.gameverse.R
 import com.example.gameverse.navigation.Routes
+import com.example.gameverse.screens.login.LoginScreenViewModel
 import com.google.firebase.auth.FirebaseAuth
+
 
 @RequiresApi(0)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserDetailScreen(navController: NavHostController) {
+fun UserDetailScreen(
+    navController: NavHostController,
+    isBottomBarVisible: Boolean,
+    toggleBottomBar: (Boolean) -> Unit,
+    viewModel: LoginScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+) {
+    viewModel.getData()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -48,19 +55,33 @@ fun UserDetailScreen(navController: NavHostController) {
                 ),
                 title = {
                     Text("Accounts Page")
+                },
+                actions = {
+                    IconButton(onClick = {
+                        FirebaseAuth.getInstance().signOut().run {
+                            toggleBottomBar(!isBottomBarVisible)
+                            navController.navigate(Routes.SplashScreen.value) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    inclusive = true
+                                }
+                                launchSingleTop = true
+                            }
+                        }
+                    }) {
+                        Icon(imageVector = Icons.Default.Logout, contentDescription = "Log Out")
+                    }
                 }
             )
         },
+
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 navController.navigate(Routes.EditAccount.value)
             }) {
                 IconButton(onClick = {
-                    FirebaseAuth.getInstance().signOut().run {
 
-                    }
                 }) {
-                    Icon(imageVector = Icons.Default.ExitToApp, contentDescription = "Log Out")
+
                 }
             }
         }
