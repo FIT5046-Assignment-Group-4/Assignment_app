@@ -11,4 +11,5 @@ enum class Routes(val value: String) {
     MainPage("Main"),
     EditAccount("edit_account"),
     Report("Report"),
+    FrontPage("FrontPage")
 }

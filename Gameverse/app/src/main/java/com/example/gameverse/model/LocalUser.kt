@@ -1,16 +1,18 @@
 package com.example.gameverse.model
 
+import androidx.compose.runtime.MutableState
+
 data class LocalUser(
-    val id: String?,
-    val userId: String,
-    val firstName: String,
-    val lastName: String,
-    val nickName: String,
-    val profilePictureUrl: String,
-    val location: String,
-    val gender: String,
-    val favGenre: String,
-    val dateOfBirth: String
+    val id: String? = null,
+    val userId: String = "",
+    val firstName: String = "",
+    val lastName: String = "",
+    val nickName: String = "",
+    val profilePictureUrl: String = "",
+    val location: String = "",
+    val gender: String = "",
+    val favGenre: String = "",
+    val dateOfBirth: String = ""
     ) {
 
     fun toMap(): MutableMap<String, Any> {
