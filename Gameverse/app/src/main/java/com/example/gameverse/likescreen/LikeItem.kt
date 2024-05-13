@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.example.gameverse.Routes
+import com.example.gameverse.navigation.Routes
 import com.example.gameverse.local.GameEntity
 
 @Composable
