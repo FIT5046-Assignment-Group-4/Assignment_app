@@ -1,4 +1,4 @@
-package com.example.gameverse
+package com.example.gameverse.navigation
 
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
@@ -13,43 +13,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.gameverse.screens.account.EditAccounts
+import com.example.gameverse.screens.account.UserDetailScreen
+import com.example.gameverse.screens.browse.Browse
+import com.example.gameverse.screens.home.Home
+import com.example.gameverse.screens.likes.Likes
+import com.example.gameverse.screens.report.Report
+
 
 @RequiresApi(0)
 @Composable
-fun BottomNavigationBar() {
-    val navController = rememberNavController()
+fun MainPage(navController: NavHostController = rememberNavController()) {
     Scaffold(
         bottomBar = {
-            BottomNavigation (backgroundColor= Color.LightGray ){
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination
-
-                NavBarItem().NavBarItems().forEach { navItem -> BottomNavigationItem(
-                    icon = { Icon(navItem.icon, contentDescription = null) },
-                    label = { Text(navItem.label) },
-                    selected = currentDestination?.hierarchy?.any {
-                        it.route == navItem.route
-                    } == true,
-                    onClick = {
-                        navController.navigate(navItem.route) {
-                            // popUpTo is used to pop up to a given destination before navigating
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            //at most one copy of a given destination on the
-                            launchSingleTop = true
-                            // this navigation action should restore any
-                            restoreState = true }
-                    }
-                )
-                } }
+            BottomNavigationBar(navController = navController)
         }
+
     ) { paddingValues ->
         NavHost(
             navController,
@@ -66,7 +52,7 @@ fun BottomNavigationBar() {
                 Likes(navController)
             }
             composable(Routes.Me.value) {
-                Me(navController)
+                UserDetailScreen(navController)
             }
             composable(Routes.EditAccount.value) {
                 EditAccounts(navController)
@@ -83,3 +69,31 @@ fun BottomNavigationBar() {
         }
     }
 }
+
+@Composable
+private fun BottomNavigationBar(navController: NavHostController) {
+    BottomNavigation(backgroundColor = Color.LightGray) {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = navBackStackEntry?.destination
+
+        NavBarItem().NavBarItems().forEach { navItem ->
+            BottomNavigationItem(
+                icon = { Icon(navItem.icon, contentDescription = null) },
+                label = { Text(navItem.label) },
+                selected = currentDestination?.hierarchy?.any {
+                    it.route == navItem.route
+                } == true,
+                onClick = {
+                    navController.navigate(navItem.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            )
+        }
+    }
+}
+

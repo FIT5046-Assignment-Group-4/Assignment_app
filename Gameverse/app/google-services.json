@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "927949216819",
+    "project_id": "gameverse-bcfa5",
+    "storage_bucket": "gameverse-bcfa5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:927949216819:android:8b1029813a3e27fa5d5746",
+        "android_client_info": {
+          "package_name": "com.example.gameverse"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdYRRGCvVULODzfL1R6caMGnXvZCB5O88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

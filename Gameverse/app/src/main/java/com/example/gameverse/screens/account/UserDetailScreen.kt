@@ -1,27 +1,20 @@
-package com.example.gameverse
+package com.example.gameverse.screens.account
 
 import android.annotation.SuppressLint
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -37,14 +30,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import com.example.gameverse.R
+import com.example.gameverse.navigation.Routes
+import com.google.firebase.auth.FirebaseAuth
 
 @RequiresApi(0)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Me(navController: NavHostController) {
+fun UserDetailScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -61,7 +55,13 @@ fun Me(navController: NavHostController) {
             FloatingActionButton(onClick = {
                 navController.navigate(Routes.EditAccount.value)
             }) {
-                Icon(Icons.Default.Check, contentDescription = "Edit")
+                IconButton(onClick = {
+                    FirebaseAuth.getInstance().signOut().run {
+
+                    }
+                }) {
+                    Icon(imageVector = Icons.Default.ExitToApp, contentDescription = "Log Out")
+                }
             }
         }
     ) {innerPadding ->

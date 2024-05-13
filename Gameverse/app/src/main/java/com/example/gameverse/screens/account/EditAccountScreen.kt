@@ -1,6 +1,5 @@
-package com.example.gameverse
+package com.example.gameverse.screens.account
 
-import android.annotation.SuppressLint
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.gameverse.components.DisplayDatePicker
 
 @RequiresApi(0)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -126,8 +126,6 @@ fun EditAccounts(navController: NavController) {
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-
-            DisplayDatePicker()
         }
     }
 }
